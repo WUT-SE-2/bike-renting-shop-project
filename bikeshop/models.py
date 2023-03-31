@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 
 class Bike(models.Model):
@@ -44,7 +45,7 @@ class Reservation(models.Model):
         finished = 'finished',
         pending = 'pending',
 
-    consumerStatus = models.CharField(
+    reservationStatus = models.CharField(
         max_length=13,
         choices=ReservationStatus.choices,
         default=ReservationStatus.pending,
@@ -68,8 +69,9 @@ class Person(models.Model):
         abstract = True
 
     @classmethod
-    def comment(cls):
-        pass
+    def comment(cls, description):
+        comment = Comment(description=description)
+        comment.save()
 
 
 class Consumer(Person):
@@ -87,28 +89,33 @@ class Consumer(Person):
     )
 
     @classmethod
-    def edit_information(cls):
-        pass
+    def edit_information(cls, name, surname, email, phone_number):
+        cls.name = name
+        cls.surname = surname
+        cls.email = email
+        cls.phoneNumber = phone_number
 
     @classmethod
     def delete_account(cls):
-        pass
+        cls.delete()
 
     @classmethod
-    def close_complaint(cls):
-        pass
+    def close_complaint(cls, complaint):
+        complaint.status = complaint.Status.closed
 
     @classmethod
-    def reopen_complaint(cls):
-        pass
+    def reopen_complaint(cls, complaint):
+        complaint.status = complaint.Status.opened
 
     @classmethod
-    def issue_complaint(cls):
-        pass
+    def issue_complaint(cls, description):
+        new_complaint = Complaint(description=description, last_updated=datetime.datetime.now())
+        new_complaint.save()
 
     @classmethod
-    def create_reservation(cls):
-        pass
+    def create_reservation(cls, reservation_date_request, reservation_date_end, reserved_bike):
+        new_reservation = Reservation(reservation_date_request=reservation_date_request, reservation_date_end=reservation_date_end, reserved_bike=reserved_bike)
+        new_reservation.save()
 
     @classmethod
     def cancel_reservation(cls):
@@ -127,24 +134,24 @@ class Worker(Person):
         pass
 
     @classmethod
-    def confirm_reservation(cls):
-        pass
+    def confirm_reservation(cls, reservation):
+        reservation.reservationStatus = reservation.ReservationStatus.confirmed
 
     @classmethod
-    def close_complaint(cls):
-        pass
+    def close_complaint(cls, complaint):
+        complaint.status = complaint.Status.closed
 
     @classmethod
-    def delete_consumer(cls):
-        pass
+    def delete_consumer(cls, consumer):
+        consumer.delete()
 
     @classmethod
-    def suspend_consumer(cls):
-        pass
+    def suspend_consumer(cls, consumer):
+        consumer.consumerStatus = consumer.ConsumerStatus.blocked
 
     @classmethod
-    def unblock_consumer(cls):
-        pass
+    def unblock_consumer(cls, consumer):
+        consumer.consumerStatus = consumer.ConsumerStatus.normal
 
     @classmethod
     def issue_payment(cls):
@@ -153,8 +160,8 @@ class Worker(Person):
 
 class Mechanic(Person):
     @classmethod
-    def transport_bike(cls):
-        pass
+    def transport_bike(cls, new_location, bike):
+        bike.location = new_location
 
     @classmethod
     def repair_bike(cls):
