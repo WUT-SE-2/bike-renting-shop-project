@@ -78,7 +78,7 @@ jobs:
     steps:
       - name: Checkout code # checking out code.
         uses: actions/checkout@v2
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@v0 # settings up gcloud cli in our job machine.
+      - uses: google-github-actions/setup-gcloud@v0 # settings up gcloud cli in our job machine.
         with:
           version: '270.0.0'
           service_account_email: ${{ secrets.GKE_EMAIL }} # email address of our service account that will be created with storage and kubernetes permissions
