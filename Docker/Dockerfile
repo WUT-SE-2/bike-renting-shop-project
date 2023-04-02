@@ -6,7 +6,6 @@ COPY requirements.txt requirements.txt
 
 COPY . .
 
-EXPOSE DOCKER_BUILDKIT=0
 
 RUN pip3 install -r requirements.txt
 
