@@ -76,6 +76,9 @@ jobs:
     needs: [package-job] # will require package-job to be successful for triggering
     if: ${{ github.event_name == 'push' }} # will be fire if the trigger event is a push event.
     steps:
+      - name: Checkout code # checking out code.
+        uses: actions/checkout@v3
+
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
         with:
