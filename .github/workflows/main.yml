@@ -77,7 +77,7 @@ jobs:
     if: ${{ github.event_name == 'push' }} # will be fire if the trigger event is a push event.
     steps:
       - name: Checkout code # checking out code.
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@v1 # settings up gcloud cli in our job machine.
         with:
           version: '>= 363.0.0'
