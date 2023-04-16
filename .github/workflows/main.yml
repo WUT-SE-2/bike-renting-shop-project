@@ -8,10 +8,6 @@ on:
     branches:
       - main
 
-  # any code pushed to master and develop branch will also be a trigger
-  push:
-    branches:
-      - main
 
 
 # three job definition
