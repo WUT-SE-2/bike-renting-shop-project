@@ -37,9 +37,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'api',
+    'bike',
+    'authentication',
+    'comment',
+    'complaint',
+    'payment',
+    'reservation',
     'rest_framework',
 ]
-
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ]
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -89,10 +102,12 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'OPTIONS':{
-                'service': 'local_settings',
-                'passfile': '.my_pgpass',
-            },
+            'NAME': 'test',
+            'USER': 'admin',
+            'PASSWORD':'admin',
+            'HOST' : '127.0.0.1',
+            'PORT' : '5432',
+
         }
     }
 
