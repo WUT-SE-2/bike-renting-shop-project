@@ -18,7 +18,7 @@ Run the following commands to download postgres:
 - sudo apt install postgresql postgresql-contrib
 - sudo service postgresql start 
 Assure that the service is running with -sudo service postgresql status (port should be 5432)
-- sudo su postgres4
+- sudo su postgres
 - CREATE USER admin WITH PASSWORD 'admin';
 There should be an information then that the suer has been created (CREATE ROLE) 
 Then list user to check if the user was added by entering \du
