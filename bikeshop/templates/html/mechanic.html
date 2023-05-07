@@ -1,0 +1,32 @@
+{% extends "homepage.html" %}
+
+{% block content %}
+	<h1>Bike Mechanic Schedule</h1>
+
+	<!-- Display scheduled repairs -->
+	<h2>Scheduled Repairs</h2>
+	<table>
+		<!-- Add more rows as necessary -->
+	</table>
+
+	<!-- Allow customers to schedule new repairs -->
+	<h2>Schedule a New Repair</h2>
+	<form>
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name"><br><br>
+
+		<label for="bike_model">Bike Model:</label>
+		<input type="text" id="bike_model" name="bike_model"><br><br>
+
+		<label for="date">Date:</label>
+		<input type="date" id="date" name="date"><br><br>
+
+		<label for="time">Time:</label>
+		<input type="time" id="time" name="time"><br><br>
+
+		<label for="description">Description:</label><br>
+		<textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+
+		<input type="submit" value="Schedule Repair">
+	</form>
+{% endblock %}
