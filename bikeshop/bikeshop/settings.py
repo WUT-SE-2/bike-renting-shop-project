@@ -11,22 +11,24 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+env = environ.Env(MAIL_ENABLED=(bool, False))
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xd-)3q4n9t5hf=@+8$_o0oqt$v5=!7n8m@mu=husn96+_i$jsk'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS').split(' ')
 
 # Application definition
 
@@ -68,7 +70,7 @@ ROOT_URLCONF = 'bikeshop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,7 +84,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'bikeshop.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -100,17 +101,16 @@ if os.getenv('GITHUB_WORKFLOW'):
     }
 else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'test',
-            'USER': 'admin',
-            'PASSWORD':'admin',
-            'HOST' : '127.0.0.1',
-            'PORT' : '5432',
-
-        }
+        'default':
+            {
+                'ENGINE': "django.db.backends.postgresql",
+                'NAME': "django",
+                'USER': "admin",
+                'PASSWORD': "admin",
+                'HOST': 'localhost',
+                'PORT': '5432',
+            }
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -130,7 +130,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -144,13 +143,16 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATICFILES_DIRS = [
+    'static/',
+]
