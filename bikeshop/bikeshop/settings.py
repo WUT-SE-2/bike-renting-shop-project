@@ -108,17 +108,6 @@ if os.getenv('GITHUB_WORKFLOW'):
     }
 else:
     DATABASES = {
-<<<<<<< HEAD
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'django',
-            'USER': 'admin',
-            'PASSWORD':'admin',
-            'HOST' : '127.0.0.1',
-            'PORT' : '5432',
-
-        }
-=======
         'default':
             {
                 'ENGINE': "django.db.backends.postgresql",
@@ -128,7 +117,6 @@ else:
                 'HOST': 'localhost',
                 'PORT': '5432',
             }
->>>>>>> origin/main
     }
 
 # Password validation
