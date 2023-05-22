@@ -28,7 +28,7 @@ Then check if the superuser  attributes was added (\du)
 Then create databse:
 - CREATE DATABSE django
 Grant privileges to the db for user admin
-- grant all privileges on databse django to admin
+- grant all privileges on database django to admin;
 Now the databse is configured, but remember to still create superuser for admin panel using python manage.py createsuperuser
 
 #### Windows Setup

@@ -1,5 +1,4 @@
 from datetime import timezone
-
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
@@ -115,7 +114,7 @@ def signin(request):
             return render(request, "bikeshop/templates/html/homepage.html")
         else:
             messages.error(request, "Bad Credentials!!")
-            return redirect('home')
+            return redirect('login')
 
     return render(request, "bikeshop/templates/html/homepage.html")
 
@@ -124,3 +123,10 @@ def signout(request):
     logout(request)
     messages.success(request, "Logged Out Successfully!!")
     return redirect('home')
+
+
+def home(request):
+    return render(request, 'html/homepage.html')
+
+def edit_profile(request):
+    return render(request, 'html/editprofile.html')
