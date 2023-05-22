@@ -114,7 +114,11 @@ def signin(request):
             return render(request, "bikeshop/templates/html/homepage.html")
         else:
             messages.error(request, "Bad Credentials!!")
+<<<<<<< HEAD
+            return redirect('login')
+=======
             return redirect('home')
+>>>>>>> b5f63c77815bb65aed112e968d38bd7df1d54c0b
 
     return render(request, "bikeshop/templates/html/homepage.html")
 
@@ -128,6 +132,10 @@ def signout(request):
 def home(request):
     return render(request, 'html/homepage.html')
 
+<<<<<<< HEAD
+def edit_profile(request):
+    return render(request, 'html/editprofile.html')
+=======
 
 def login(request):
     return render(request, 'html/login.html')
@@ -139,3 +147,4 @@ def edit_profile(request):
 
 def register(request):
     return render(request, 'html/registration.html')
+>>>>>>> b5f63c77815bb65aed112e968d38bd7df1d54c0b
