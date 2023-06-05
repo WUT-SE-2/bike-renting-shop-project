@@ -6,7 +6,6 @@ from django.utils import timezone
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from .serializers import *
-
 from bike.models import Bike as bike
 from comment.models import Comment as comment
 from complaint.models import Complaint as complaint
