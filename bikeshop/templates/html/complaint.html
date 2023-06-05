@@ -1,0 +1,15 @@
+
+{% extends "html/homepage.html" %}
+
+{% block content %}
+	<h1>Make a Payment</h1>
+	<form method="post" action="/complaint/create/{{reservation.reservation_ID}}">
+		{% csrf_token %}
+		<label>Reservation ID: {{reservation.reservation_ID}}</label><br><br><br>
+		<label for="details">Complaint details</label><br>
+        <textarea id="details" class="text" cols="86" rows ="20" name="details"></textarea>
+		<input type="submit" value="Send">
+	</form>
+
+	<!-- Add any links to other payment methods or refund forms here -->
+{% endblock %}

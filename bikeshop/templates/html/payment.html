@@ -3,23 +3,11 @@
 
 {% block content %}
 	<h1>Make a Payment</h1>
-	<form method="post">
+	<form method="post" action="/payment/pay/{{reservation.reservation_ID}}">
 		{% csrf_token %}
-		<label for="card_number">Card Number:</label>
-		<input type="text" id="card_number" name="card_number"><br><br>
-
-		<label for="card_name">Name on Card:</label>
-		<input type="text" id="card_name" name="card_name"><br><br>
-
-		<label for="expiration_date">Expiration Date:</label>
-		<input type="text" id="expiration_date" name="expiration_date"><br><br>
-
-		<label for="security_code">Security Code:</label>
-		<input type="text" id="security_code" name="security_code"><br><br>
-
-		<label for="amount">Amount:</label>
-		<input type="number" id="amount" name="amount" min="0" step="0.01"><br><br>
-
+		<label>Reservation ID: {{reservation.reservation_ID}}</label><br>
+		<label>Payment value to be processed: {{reservation.reserved_bike.rent_value}}</label><br>
+		<label>Bike name: {{reservation.reserved_bike.name}}</label><br>
 		<input type="submit" value="Pay">
 	</form>
 

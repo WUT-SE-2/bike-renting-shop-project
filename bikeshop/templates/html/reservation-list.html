@@ -1,0 +1,54 @@
+{% extends "html/homepage.html" %}
+
+{% block content %}
+
+<Label>Payment details</Label>
+<!-- Add any links to other payment methods or refund forms here -->
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Reservation id</th>
+        <th scope="col">Reserved bike name</th>
+        <th scope="col">Reservation start date</th>
+        <th scope="col">Reservation end date</th>
+        <th scope="col">Reservation status</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for reservation in reservations%}
+    <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{reservation.reservation_ID}}</td>
+        <td>{{reservation.reservation_date_request}}</td>
+        <td>{{reservation.reserved_bike.name}}</td>
+        <td>{{reservation.reservation_date_end}}</td>
+        <td>{{reservation.reservationStatus}}</td>
+        <td>
+            <form action="/complaint/create/{{reservation.reservation_ID}}" method="get" style="display: inline;">
+                {% csrf_token %}
+                <input type="submit" value="Complain">
+            </form>
+            {% if reservation.is_paid%}
+            {% elif reservation.reservationStatus == 'confirmed' and reservation.is_paid == False%}
+            |
+            <form action="/payment/payment-confirm/{{reservation.reservation_ID}}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <input type="submit" value="Pay">
+            </form>
+
+            {% endif %}
+            {%if reservation.is_paid == False%}
+            |
+            <form action="/reservation/cancel/{{reservation.reservation_ID}}" method="post" style="display: inline; border: none;">
+                {% csrf_token %}
+                <input type="submit" value="Cancel">
+            </form>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

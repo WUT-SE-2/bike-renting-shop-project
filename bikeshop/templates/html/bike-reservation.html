@@ -1,0 +1,17 @@
+{% extends "html/homepage.html" %}
+{% block content %}
+    <h1>Reserve bike </h1>
+    <label>Reserve {{bike.name}}</label>
+    <form method="post", action="/reservation/reserve/{{bike.bike_ID}}">
+		{% csrf_token %}
+		<label for="date_from">Reservation start date</label>
+		<input type="date" id="date_from" name="date_from"><br><br>
+
+		<label for="date_till">Reservation end date:</label>
+		<input type="date" id="date_till" name="date_till"><br><br>
+
+		<input type="submit" value="Register">
+	</form>
+
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "html/homepage.html" %}
+
+{% block content %}
+
+<!-- Add any links to other payment methods or refund forms here -->
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Last Updated</th>
+        <th scope="col">Related reservation id</th>
+        <th scope="col">Complaint status</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for complaint in complaints%}
+    <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{complaint.last_updated}}</td>
+        <td>{{complaint.reservation.reservation_ID}}</td>
+        <td>{{complaint.status}}</td>
+        <td>
+            <form action="" method="" style="display: inline;">
+                {% csrf_token %}
+                <input type="submit" value="Details">
+            </form>
+            |
+            <form action="/complaint/close/{{complaint.comp_ID}}" method=""
+                  style="display: inline;">
+                {% csrf_token %}
+                <input type="submit" value="Cancel">
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
