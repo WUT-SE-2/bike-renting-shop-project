@@ -33,3 +33,7 @@ class Mechanic(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phoneNumber = models.CharField(max_length=20, default='')
     company = models.CharField(max_length=50, default='Bike Industries')
+    active_ticket_num = models.IntegerField(default=0)
+    total_tickets_num= models.IntegerField(default=0)
+    active_service_num = models.IntegerField(default=0)
+    total_service_num = models.IntegerField(default=0)

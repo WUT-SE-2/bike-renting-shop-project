@@ -18,6 +18,7 @@ from django.contrib.auth.decorators import login_required
 from .authentication_helpers import confirm_consumer, confirm_mechanic, confirm_worker
 from django.http import HttpResponseForbidden
 
+
 # Create your views here.
 
 
@@ -30,23 +31,23 @@ def register(request):
         phone_num = request.POST['phone_num']
         if User.objects.filter(username=username):
             messages.error(request, "Username already exist! Please try some other username.")
-            return redirect('home')
+            return redirect('/register')
 
         if User.objects.filter(email=email).exists():
             messages.error(request, "Email Already Registered!!")
-            return redirect('home')
+            return redirect('register')
 
         if len(username) > 20:
             messages.error(request, "Username must be under 20 characters!!")
-            return redirect('home')
+            return redirect('register')
 
         if pass1 != pass2:
             messages.error(request, "Passwords didn't match!!")
-            return redirect('home')
+            return redirect('register')
 
         if not username.isalnum():
             messages.error(request, "Username must be Alpha-Numeric!!")
-            return redirect('home')
+            return redirect('register')
 
         myuser = User.objects.create_user(username, email, pass1)
         myuser.is_active = False
@@ -138,6 +139,22 @@ def home(request):
 
 
 @login_required(login_url='/login')
+def home_mechanic(request):
+    user = request.user
+    if not confirm_mechanic(user.id):
+        redirect('logout')
+    return render(request, 'html/home-mechanic.html')
+
+
+@login_required(login_url='/login')
+def home_worker(request):
+    user = request.user
+    if not confirm_worker(user.id):
+        redirect('logout')
+    return render(request, 'html/home-worker.html')
+
+
+@login_required(login_url='/login')
 def profile_print(request):
     u = request.user
     user = User.objects.filter(id=u.id).first()
@@ -167,9 +184,15 @@ def profile_edit(request):
         if password is not None and password2 is not None:
             if password2 == password and password != "":
                 user.set_password(password)
+            else:
+                messages.error(request,"Passwords are not the same")
+                redirect('/profileEdit')
         if email is not None:
-            if len(User.objects.filter(email=email).all()) == 0:
+            if len(User.objects.filter(email=email).all()) == 0 or consumer.user.email == email:
                 user.email = email
+            else:
+                messages.error(request, "Account with this email already exist")
+                redirect('/profileEdit')
         if first_name is not None:
             user.first_name = first_name
         if last_name is not None:
@@ -178,16 +201,7 @@ def profile_edit(request):
             consumer.phoneNumber = phoneNumber
         user.save()
         consumer.save()
+        messages.success(request, "Data changed successfully")
         return redirect('/profileEdit/')
     consumer = Consumer.objects.filter(user__id=user.id).first()
     return render(request, 'html/profile-edit.html', {'consumer': consumer, 'user': user})
-
-
-@login_required(login_url='/login')
-def worker_home(request):
-    return render(request, 'html/home-worker.html')
-
-
-@login_required(login_url='/login')
-def mechanic_home(request):
-    return render(request, 'html/home-mechanic.html')
