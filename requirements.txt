@@ -8,3 +8,5 @@ pytz==2020.4
 sqlparse==0.4.1
 django-environ>= 0.4
 six>=1.16.0
+dj-database-url==2.0.0
+gunicorn
