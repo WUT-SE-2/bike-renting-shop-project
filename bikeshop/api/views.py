@@ -9,13 +9,25 @@ from .serializers import *
 from bike.models import Bike as bike
 from comment.models import Comment as comment
 from complaint.models import Complaint as complaint
-
-from payment.models import Payment as payment 
-
+from payment.models import Payment as payment
 from reservation.models import Reservation as reservation
 from authentication.models import Consumer as consumer
 from authentication.models import Worker as worker
 
+class Bikes(APIView):
+    serializer_class = BikeSerializer
+
+    def get(self, request, format=None):
+        snippets = bike.objects.all()
+        serializer = BikeSerializer(snippets, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = BikeSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class Bike(APIView):
     serializer_class = BikeSerializer
@@ -47,11 +59,19 @@ class Bike(APIView):
 
 class Comments(APIView):
     serializer_class = CommentSerializer
-    
+
     def get(self, request, format=None):
         snippets = comment.objects.all()
         serializer = CommentSerializer(snippets, many=True)
         return Response(serializer.data)
+
+
+    def post(self, request, format=None):
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @api_view(['POST'])
     def postWorkerData(self, request, *args, **kwargs):
@@ -64,7 +84,7 @@ class Comments(APIView):
                 'comments' : request.data.get('comments'),
                 'reservations' : request.data.get('reservations')
             }
-            serializer = WorkerSerializer(data=data) 
+            serializer = WorkerSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
                 PersonDataREST.ID =+ 1
@@ -81,6 +101,29 @@ class Comment(APIView):
     def get(self, request, pk, format=None):
         Comment = self.get_object(pk)
         serializer = CommentSerializer(Comment)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        Comment = self.get_object(pk)
+        serializer = CommentSerializer(Comment, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        Comment = self.get_object(pk)
+        Comment.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+class Complaints(APIView):
+    serializer_class = ComplaintSerializer
+
+    def get(self, request, format=None):
+        snippets = complaint.objects.all()
+        serializer = ComplaintSerializer(snippets, many=True)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
@@ -123,8 +166,12 @@ class Complaint(APIView):
         Complaint.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class Reservation(APIView):
+class Reservations(APIView):
     serializer_class = ReservationSerializer
+
+    def get(self, request, format=None):
+        snippets = reservation.objects.all()
+        serializer = ReservationSerializer(snippets, many=True)
 
     def get_object(self, pk):
         try:
@@ -149,7 +196,7 @@ class Reservation(APIView):
         Reservation = self.get_object(pk)
         Reservation.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
 
 
 class Payment(APIView):
@@ -177,7 +224,7 @@ class Payment(APIView):
         Payments = self.get_object(pk)
         Payments.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
 
 
 class Consumer(APIView):
@@ -234,6 +281,7 @@ class Worker(APIView):
         Worker.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class Reservation(APIView):
     serializer_class = ReservationSerializer
 
@@ -261,9 +309,25 @@ class Reservation(APIView):
         Reservation.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class Payment(APIView):
+
+class Payments(APIView):
     serializer_class = PaymentSerializer
 
+    def get(self, request, format=None):
+        Payments = payment.objects.all()
+        serializer = PaymentSerializer(Payments, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = PaymentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class Payment(APIView):
+    serializer_class = PaymentSerializer
     def get_object(self, pk):
         try:
             return payment.objects.get(pk=pk)
@@ -288,6 +352,21 @@ class Payment(APIView):
         Payments.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+class Consumers(APIView):
+    serializer_class = ConsumerSerializer
+
+    def get(self, request, format=None):
+        Consumers = consumer.objects.all()
+        serializer = ConsumerSerializer(Consumers, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = ConsumerSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class Consumer(APIView):
@@ -317,13 +396,12 @@ class Consumer(APIView):
         Consumer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
 class Workers(APIView):
-    # renderer_classes = [TemplateHTMLRenderer]  #for frontend
+    #renderer_classes = [TemplateHTMLRenderer]  #for frontend
     serializer_class = WorkerSerializer
 
     def get(self, request, format=None):
-        Workers = worker.objects.all()
+        Workers =  worker.objects.all()
         serializer = WorkerSerializer(Workers, many=True)
         return Response(serializer.data)
 
@@ -361,3 +439,11 @@ class Worker(APIView):
         Worker = self.get_object(pk)
         Worker.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+# @api_view(['GET'])
+# def getMechanicData(request):
+#     mechanics = Mechanic.objects.all()
+#     serializer = MechanicSerializer(mechanics, many=True)
+#     return Response(serializer.data)
