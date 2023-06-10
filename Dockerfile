@@ -11,7 +11,6 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 # copy project
 COPY bikeshop .
-RUN python manage.py migrate
 CMD ["gunicorn", "bikeshop.wsgi:application"]
 
 
