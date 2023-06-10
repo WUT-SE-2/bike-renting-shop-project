@@ -11,4 +11,7 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 # copy project
 COPY . .
+CMD ["cd", "bikeshop"]
+CMD ["gunicorn", "bikeshop.wsgi:application"]
+
 
