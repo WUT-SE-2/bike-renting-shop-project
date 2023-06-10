@@ -9,9 +9,9 @@ ENV PYTHONUNBUFFERED 1
 RUN pip install --upgrade pip
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-RUN python bikeshop/manage.py migrate
 # copy project
 COPY bikeshop .
+RUN python manage.py migrate
 CMD ["gunicorn", "bikeshop.wsgi:application"]
 
 
