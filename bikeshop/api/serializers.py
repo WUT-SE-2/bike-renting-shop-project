@@ -4,7 +4,7 @@ from comment.models import Comment
 from complaint.models import Complaint
 from payment.models import Payment
 from reservation.models import Reservation
-from authentication.models import Person, Worker, Consumer
+from authentication.models import Worker, Consumer
 # from comment.models import  Comment
 
 class BikeSerializer(serializers.ModelSerializer):

@@ -7,3 +7,4 @@ asgiref>=3.3.2
 pytz==2020.4
 sqlparse==0.4.1
 django-environ>= 0.4
+six>=1.16.0
