@@ -120,7 +120,7 @@ WSGI_APPLICATION = 'bikeshop.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    "default": dj_database_url.parse(os.environ.get("DB_URL"))
+    "default": dj_database_url.parse("postgres://brp_db_iw8s_user:n170pfYYq8hUHv4F6GCLyqxhuRcpQTJK@dpg-ci2auk67avj2t33ch7tg-a/brp_db_iw8s")
 }
 
 # Password validation
