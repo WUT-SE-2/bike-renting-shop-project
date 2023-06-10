@@ -1,0 +1,38 @@
+{% extends "html/homepage.html" %}
+
+{% block content %}
+<!-- Product section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0"
+                                       src="{{ bike.image.url }}" alt="..."/></div>
+            <div class="col-md-6">
+                <h1 class="display-5 fw-bolder">{{bike.name}}</h1>
+                <div class="fs-5 mb-5">
+                    <span>Renting fee: {{bike.rent_value}} $</span>
+                </div>
+                <p class="lead">Horse power: {{bike.hp}}</p>
+                <p class="lead">Location: {{bike.location}}</p>
+                <p class="lead">Purchase date: {{bike.purchase_date}}</p>
+                <p class="lead">Description: <br>{{bike.description}}</p>
+                <div class="d-flex">
+                    {%if bike.bike_status == "free"%}
+                    <form action="/reservation/reserve/{{bike.bike_ID}}">
+                        <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            Reserve
+                        </button>
+                    </form>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="../js/scriptsitem.js"></script>
+{% endblock %}

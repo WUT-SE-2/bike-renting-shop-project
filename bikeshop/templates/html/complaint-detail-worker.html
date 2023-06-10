@@ -1,0 +1,157 @@
+{% extends "html/homepage-worker.html" %}
+
+{% block content %}
+
+<div class="container bootstrap snippet">
+    <div class="row" style="padding-top:40px;">
+        <div class="col-sm-10"><h1>Complaint details</h1></div>
+    </div>
+    <div class="row" style="padding-top:40px;">
+        <div style="padding:10px 10px 10px 10px;border-radius:15px;border-color:black;" class="border">
+            <div class="col">
+                <div class="row">
+                    <div class="col-2">
+                        <label style="font-weight:bold;">Complaint ID</label>
+                    </div>
+                    <div class="col-2" style="text-align:left;">
+                        {{complaint.comp_ID}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <label style="font-weight:bold;">Last Updated:</label>
+                    </div>
+                    <div class="col-4" style="text-align:left;">
+                        {{complaint.last_updated}} UTC
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <label style="font-weight:bold;">Status:</label>
+                    </div>
+                    <div class="col-4" style="text-align:left;">
+                        {{complaint.status}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <label style="font-weight:bold;">Issued by:</label>
+                    </div>
+                    <div class="col-4" style="text-align:left;">
+                        {{user.first_name}} {{user.last_name}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <label style="font-weight:bold;">Mechanic assigned</label>
+                    </div>
+                    <div class="col-4" style="text-align:left;">
+                        {{complaint.mechanic.user.first_name}} {{complaint.mechanic.user.last_name}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <label style="font-weight:bold;">Worker assigned:</label>
+                    </div>
+                    <div class="col-4" style="text-align:left;">
+                        {{complaint.worker.user.first_name}} {{complaint.worker.user.last_name}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <label style="font-weight:bold;">Description</label>
+                    </div>
+                    <div class="col-4" style="text-align:left;">
+                        {{complaint.description}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="container py-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-12 col-lg-8 col-xl-4">
+
+                        <div class="card" id="chat1" style="border-radius: 15px;">
+                            <div
+                                    class="card-header d-flex justify-content-between align-items-center p-3 bg-info text-white border-bottom-0"
+                                    style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                                <i class="fas fa-angle-left"></i>
+                                <p class="mb-0 fw-bold">Chat</p>
+                                <i class="fas fa-times"></i>
+                            </div>
+
+                            <div class="card-body">
+                                {%for comment in comments%}
+                                {%if comment.user.id != user.id%}
+                                <div class="d-flex flex-row justify-content-start mb-4">
+                                    <div class="p-3 ms-3"
+                                         style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                                        <p class="small mb-0">{{comment.comment}} <br>
+                                        {{comment.user.first_name}} {{comment.user.last_name}}</p>
+                                    </div>
+                                </div>
+                                {%else%}
+                                <div class="d-flex flex-row justify-content-end mb-4">
+                                    <div class="p-3 me-3 border"
+                                         style="border-radius: 15px; background-color: #fbfbfb;">
+                                        <p class="small mb-0">{{comment.comment}} <br>
+                                        {{comment.user.first_name}} {{comment.user.last_name}}</p>
+                                    </div>
+                                </div>
+                                {%endif%}
+                                {% endfor %}
+
+                                <div class="d-flex flex-row justify-content-start mb-4">
+                                    <div class="ms-3" style="border-radius: 15px;">
+                                        <div class="bg-image">
+                                            <a href="#!">
+                                                <div class="mask"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-outline">
+                                    {%if complaint.status == "opened"%}
+                                    <form action="/comment/add/{{complaint.comp_ID}}" method="post" id="message">
+                                        {% csrf_token%}
+                                    </form>
+                                    <form id="close" action="/complaint/close/{{complaint.comp_ID}}" method="post"
+                                          id="close">
+                                        {% csrf_token%}
+                                    </form>
+                                    <textarea class="form-control" name="description" id="description" rows="3"
+                                              form="message"></textarea>
+                                    <div style="margin-top:10px; margin-left:140px;">
+                                        <button type="submit" class="btn btn-light" value="Send"
+                                                form="message">Submit
+                                        </button>
+                                        <button type="submit" class="btn btn-light" value="Close"
+                                                form="close">Close
+                                        </button>
+                                    </div>
+                                    {%else%}
+                                    <form action="/complaint/reopen/{{complaint.comp_ID}}" method="post" id="reopen">
+                                        {% csrf_token%}
+                                    </form>
+                                    <div style="margin-top:10px; margin-left:140px;">
+                                        <button type="submit" class="btn btn-light" value="Reopen"
+                                                form="reopen">Reopen
+                                        </button>
+                                    </div>
+                                    {%endif%}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "html/homepage.html" %}
+
+{% block content %}
+
+<div class="container bootstrap snippet">
+    <div class="row" style="padding-top:40px;">
+        <div class="col-sm-10"><h1>Reservation details</h1></div>
+    </div>
+    <div class="row" style="padding-top:40px;">
+        <div style="padding:10px 10px 10px 10px;border-radius:15px;border-color:black;" class="border">
+            <div class="col">
+                <div class="row">
+                    <div class="col-4">
+                        <label style="font-weight:bold;">Reservation ID:</label>
+                    </div>
+                    <div class="col-4" style="text-align:left;">
+                        {{reservation.reservation_ID}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label style="font-weight:bold;">Bike rented:</label>
+                    </div>
+                    <div class="col-4" style="text-align:left;">
+                        {{reservation.reserved_bike.name}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label style="font-weight:bold;">Is paid:</label>
+                    </div>
+                    <div class="col-4" style="text-align:left;">
+                        {{reservation.is_paid}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label style="font-weight:bold;">Reserved by:</label>
+                    </div>
+                    <div class="col-4" style="text-align:left;">
+                        {{reservation.user.first_name}} {{reservation.user.last_name}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label style="font-weight:bold;">Reservation status:</label>
+                    </div>
+                    <div class="col-4" style="text-align:left;">
+                        {{reservation.reservationStatus}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label style="font-weight:bold;">Start of the reservation: </label>
+                    </div>
+                    <div class="col-4" style="text-align:left;">
+                        {{reservation.reservation_date_request}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label style="font-weight:bold;">End of the reservation:</label>
+                    </div>
+                    <div class="col-4" style="text-align:left;">
+                        {{reservation.reservation_date_end}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

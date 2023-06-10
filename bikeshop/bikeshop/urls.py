@@ -22,5 +22,7 @@ urlpatterns = [
     path('', include('authentication.urls')),
     path('payment/', include('payment.urls')),
     path('bike/', include('bike.urls')),
-
+    path('reservation/', include('reservation.urls')),
+    path('complaint/', include('complaint.urls')),
+    path('comment/', include('comment.urls')),
 ]

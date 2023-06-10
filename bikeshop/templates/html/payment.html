@@ -1,27 +1,20 @@
-
 {% extends "html/homepage.html" %}
 
 {% block content %}
-	<h1>Make a Payment</h1>
-	<form method="post">
-		{% csrf_token %}
-		<label for="card_number">Card Number:</label>
-		<input type="text" id="card_number" name="card_number"><br><br>
-
-		<label for="card_name">Name on Card:</label>
-		<input type="text" id="card_name" name="card_name"><br><br>
-
-		<label for="expiration_date">Expiration Date:</label>
-		<input type="text" id="expiration_date" name="expiration_date"><br><br>
-
-		<label for="security_code">Security Code:</label>
-		<input type="text" id="security_code" name="security_code"><br><br>
-
-		<label for="amount">Amount:</label>
-		<input type="number" id="amount" name="amount" min="0" step="0.01"><br><br>
-
-		<input type="submit" value="Pay">
-	</form>
-
-	<!-- Add any links to other payment methods or refund forms here -->
+<div class="container" style="text-align:center;padding-top:100px;padding-bottom:20px;max-width:70%">
+    <h1 class="display-1">Make a Payment</h1>
+</div>
+<div class="container" style="padding-bottom:100px;max-width:30%">
+    <form method="post" action="/payment/pay/{{reservation.reservation_ID}}">
+        {% csrf_token %}
+        <div class="form-outline mb-4">
+            <label class="form-label">Reservation ID: {{reservation.reservation_ID}}</label><br>
+            <label class="form-label">Payment value to be processed:
+                {{reservation.reserved_bike.rent_value}}</label><br>
+            <label class="form-label">Bike name: {{reservation.reserved_bike.name}}</label><br>
+        </div>
+        <button type="submit" value="Pay" class="btn btn-primary btn-block mb-4">Pay</button>
+    </form>
+</div>
+<!-- Add any links to other payment methods or refund forms here -->
 {% endblock %}

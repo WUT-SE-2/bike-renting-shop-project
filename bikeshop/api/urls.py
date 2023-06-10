@@ -3,20 +3,20 @@ from . import views
 
 
 urlpatterns = [
-    path('getbikes/', views.BikeDataREST.getBikeData),
-    path('getcomments/', views.CommentDataREST.getCommentData),
-    path('getcomplaints/', views.ComplaintDataREST.getComplaintData),
-    path('getreservations/', views.ReservationDataREST.getReservationData),
-    path('getpayments/', views.PaymentDataREST.getPaymentData),
-    path('getperson/', views.PersonDataREST.getPersonData),
-    path('getworkers/', views.WorkerDataREST.getWorkerData),
+    path('bikes/', views.Bikes.as_view()),
+    path('comments/', views.Comments.as_view()),
+    path('complaints/', views.Complaints.as_view()),
+    path('reservations/', views.Reservations.as_view()),
+    path('payments/', views.Payments.as_view()),
+    path('consumers/', views.Consumers.as_view()),
+    path('workers/', views.Workers.as_view()),
 
-    path('postbikes/', views.BikeDataREST.postBikeData),
-    path('postcomments/', views.CommentDataREST.postCommentData),
-    path('postcomplaints/', views.ComplaintDataREST.postComplaintData),
-    path('postreservations/', views.ReservationDataREST.postReservationData),
-    path('postpayments/', views.PaymentDataREST.postReservationData),
-    path('postperson/', views.PersonDataREST.postPersonData),
-    path('postworkers/', views.WorkerDataREST.postWorkerData),
-    # path('mechanics/', views.getMechanicData),
+    path('bike/<int:pk>/', views.Bike.as_view()),
+    path('comment/<int:pk>/', views.Comment.as_view()),
+    path('complaint/<int:pk>/', views.Complaint.as_view()),
+    path('reservation/<int:pk>/', views.Reservation.as_view()),
+    path('payment/<int:pk>/', views.Payment.as_view()),
+    path('consumer/<int:pk>/', views.Consumer.as_view()),
+    path('worker/<int:pk>/', views.Worker.as_view()),
+    
 ]

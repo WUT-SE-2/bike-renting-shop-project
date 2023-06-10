@@ -1,0 +1,38 @@
+{% extends "html/homepage.html" %}
+
+{% block content %}
+
+<div class="container" style="padding-top:100px;padding-bottom:100px;max-width:30%">
+    <h1 class="display-1" style="text-align:center;padding-bottom:20px;">Add funds</h1>
+    <form action="/payment/add/" method="post">
+        {% csrf_token %}
+        <div class="form-outline mb-4">
+            <label class="form-label" for="card number">Name and surname</label>
+            <input type="text" id="card number" class="form-control" name="card number"  required/>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="amount">Amount</label>
+            <input type="number"  min="0" id="amount" class="form-control" name="amount" required/>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="card_num">Card number</label>
+            <input type="text" id="card_num" pattern="[0-9]{16}"  class="form-control" name="card_num" required/>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="expire">Expire date</label>
+            <input type="date" id="expire" class="form-control" name="expire" required/>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="cvv">CVV code</label>
+            <input type="text" id="cvv" pattern="[0-9]{3}" class="form-control" name="cvv"  required/>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block mb-4">Add funds</button>
+    </form>
+</div>
+<!-- Add any links to other pages or login forms here -->
+{% endblock %}

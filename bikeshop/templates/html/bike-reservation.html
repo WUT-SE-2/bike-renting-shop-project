@@ -1,0 +1,22 @@
+{% extends "html/homepage.html" %}
+{% block content %}
+
+<div class="container" style="text-align:center;padding-top:100px;padding-bottom:20px;max-width:70%">
+    <h1 class="display-1">Reserve {{bike.name}}</h1>
+</div>
+<div class="container" style="padding-bottom:100px;max-width:30%">
+	<form method="post", action="/reservation/reserve/{{bike.bike_ID}}">
+		{% csrf_token %}
+		<div class="form-outline mb-4">
+		<label class="form-label" for="date_from">Reservation start date</label>
+		<input class="form-control" type="date" id="date_from" name="date_from"><br><br>
+		</div>
+		<div class="form-outline mb-4">
+		<label class="form-label" for="date_till">Reservation end date:</label>
+		<input class="form-control" type="date" id="date_till" name="date_till"><br><br>
+		</div>
+		<button type="submit" class="btn btn-primary btn-block mb-4" value="Reserve">Reserve</button>
+	</form>
+</div>
+
+{% endblock %}

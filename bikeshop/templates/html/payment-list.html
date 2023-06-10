@@ -10,7 +10,7 @@
         <th scope="col">#</th>
         <th scope="col">Payment date</th>
         <th scope="col">Price</th>
-        <th></th>
+        <th scope="col">Reservation ID</th>
     </tr>
     </thead>
     <tbody>
@@ -19,6 +19,7 @@
         <th scope="row">{{forloop.counter}}</th>
         <td>{{payment.payment_date}}</td>
         <td>{{payment.amount}}</td>
+        <td>{{payment.reservation.reservation_ID}}</td>
     </tr>
     {% endfor %}
     </tbody>
