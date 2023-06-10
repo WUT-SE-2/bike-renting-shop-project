@@ -1,5 +1,5 @@
 FROM python:3.8-slim-buster
-
+python bikeshop/manage.py migrate
 # set work directory
 WORKDIR .:/usr/src/app/
 # set environment variables
