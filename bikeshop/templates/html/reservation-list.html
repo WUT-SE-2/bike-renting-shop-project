@@ -2,7 +2,6 @@
 
 {% block content %}
 
-<Label>Payment details</Label>
 <!-- Add any links to other payment methods or refund forms here -->
 <table class="table">
     <thead>
@@ -21,31 +20,64 @@
     <tr>
         <th scope="row">{{forloop.counter}}</th>
         <td>{{reservation.reservation_ID}}</td>
-        <td>{{reservation.reservation_date_request}}</td>
         <td>{{reservation.reserved_bike.name}}</td>
+        <td>{{reservation.reservation_date_request}}</td>
         <td>{{reservation.reservation_date_end}}</td>
         <td>{{reservation.reservationStatus}}</td>
         <td>
-            <form action="/complaint/create/{{reservation.reservation_ID}}" method="get" style="display: inline;">
+            {% if reservation.is_active%}
+            {{reservation.reservation_ID}}
+            <form action="/complaint/create/{{reservation.reservation_ID}}"
+                  style="display: inline;">
                 {% csrf_token %}
-                <input type="submit" value="Complain">
+                <button type="submit" class="btn btn-light" value="Complain"
+                        >Complaint
+                </button>
             </form>
-            {% if reservation.is_paid%}
-            {% elif reservation.reservationStatus == 'confirmed' and reservation.is_paid == False%}
-            |
-            <form action="/payment/payment-confirm/{{reservation.reservation_ID}}" method="post" style="display: inline;">
+            {% if reservation.reservationStatus == "confirmed" and reservation.is_paid == False%}
+            <form  action="/payment/payment-confirm/{{reservation.reservation_ID}}"
+                  style="display: inline;">
                 {% csrf_token %}
-                <input type="submit" value="Pay">
+                <button type="submit" class="btn btn-light" value="Pay"
+                        >Pay
+                </button>
             </form>
-
-            {% endif %}
-            {%if reservation.is_paid == False%}
-            |
-            <form action="/reservation/cancel/{{reservation.reservation_ID}}" method="post" style="display: inline; border: none;">
+            {%endif%}
+            {%if reservation.reservationStatus == "pending"%}
+            <form  action="/reservation/cancel/{{reservation.reservation_ID}}"
+                  style="display: inline; border: none;">
                 {% csrf_token %}
-                <input type="submit" value="Cancel">
+                <button type="submit" class="btn btn-light" value="Cancel"
+                        >Cancel
+                </button>
             </form>
-            {% endif %}
+            {%endif%}
+            {% if reservation.reservationStatus == "confirmed" and reservation.is_paid == True and reservation.reserved_bike.bike_status == 'reserved'%}
+            <form action="/bike/request/{{reservation.reserved_bike.bike_ID}}"
+                  style="display: inline; border: none;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-light" value="Get Bike"
+                        >Get Bike
+                </button>
+            </form>
+            {%endif%}
+            {%if reservation.reservationStatus == 'finished' and reservation.is_paid == True and reservation.reserved_bike.bike_status == 'rented'%}
+            <form  action="/bike/return/{{reservation.reserved_bike.bike_ID}}"
+                  style="display: inline; border: none;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-light" value="Return"
+                        >Return
+                </button>
+            </form>
+            {%endif%}
+            <form action="/reservation/detail/{{reservation.reservation_ID}}"
+                  style="display: inline; border: none;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-light" value="Details"
+                        >Details
+                </button>
+            </form>
+            {%endif%}
         </td>
     </tr>
     {% endfor %}

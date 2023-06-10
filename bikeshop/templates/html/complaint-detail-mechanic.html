@@ -1,4 +1,4 @@
-{% extends "html/homepage.html" %}
+{% extends "html/homepage-mechanic.html" %}
 
 {% block content %}
 
@@ -129,15 +129,6 @@
                                         </button>
                                         <button type="submit" class="btn btn-light" value="Close"
                                                 form="close">Close
-                                        </button>
-                                    </div>
-                                    {%else%}
-                                    <form action="/complaint/reopen/{{complaint.comp_ID}}" method="post" id="reopen">
-                                        {% csrf_token%}
-                                    </form>
-                                    <div style="margin-top:10px; margin-left:140px;">
-                                        <button type="submit" class="btn btn-light" value="Reopen"
-                                                form="reopen">Reopen
                                         </button>
                                     </div>
                                     {%endif%}

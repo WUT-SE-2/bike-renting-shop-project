@@ -1,15 +1,17 @@
-
 {% extends "html/homepage.html" %}
 
 {% block content %}
-	<h1>Make a Payment</h1>
-	<form method="post" action="/complaint/create/{{reservation.reservation_ID}}">
-		{% csrf_token %}
-		<label>Reservation ID: {{reservation.reservation_ID}}</label><br><br><br>
-		<label for="details">Complaint details</label><br>
-        <textarea id="details" class="text" cols="86" rows ="20" name="details"></textarea>
-		<input type="submit" value="Send">
-	</form>
-
-	<!-- Add any links to other payment methods or refund forms here -->
+<div class="container" style="padding-top:100px;text-align:center;padding-bottom:20px;">
+    <h1 class="display-1" style="">Create a complaint</h1>
+</div>
+<div class="container" style="padding-bottom:100px;max-width: 30%">
+    <form method="post" action="/complaint/create/{{reservation.reservation_ID}}">
+        {% csrf_token %}
+        <label class="form-label">Reservation ID: {{reservation.reservation_ID}}</label><br><br><br>
+        <label class="form-label" for="details">Complaint description</label><br>
+        <textarea class="form-control" id="details" class="text" cols="86" rows="5" name="details"></textarea><br>
+        <button type="submit" value="Send" class="btn btn-primary btn-block mb-4">Send</button>
+    </form>
+</div>
+<!-- Add any links to other payment methods or refund forms here -->
 {% endblock %}

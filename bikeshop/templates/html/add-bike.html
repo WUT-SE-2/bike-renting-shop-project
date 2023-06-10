@@ -1,0 +1,46 @@
+{% extends "html/homepage-worker.html" %}
+
+{% block content %}
+
+<div class="container" style="padding-top:100px;padding-bottom:100px;max-width: 30%">
+
+<h1 class="display-1" style="text-align:center;padding-bottom:20px;">Add a bike</h1>
+    <form method="post" action="/bike/add" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-outline mb-4">
+            <label for="name" class="form-label">Bike name</label><br>
+            <input type="text"class="form-control" name="name" id="name" placeholder="Enter name of the bike" required>
+        </div>
+        <div class="form-outline mb-4">
+            <label for="location" class="form-label">Bike location</label><br>
+            <input type="text" class="form-control" name="location" id="location" placeholder="Enter location of the bike" required>
+        </div>
+        <div class="form-outline mb-4">
+            <label for="purchase_date" class="form-label">Purchase date</label><br>
+            <input type="date" id="purchase_date" class="form-control" name="purchase_date" required><br>
+        </div>
+        <div class="form-outline mb-4">
+            <label for="details" class="form-label">Bike description</label><br>
+            <textarea id="details" class="text" class="form-control"cols="86" rows="3" name="details" required></textarea>
+        </div>
+        <div class="form-outline mb-4">
+            <label for="rent_value" class="form-label">Renting value:</label><br>
+            <input type="number" name="rent_value" class="form-control" id="rent_value" placeholder="Enter renting value" min="0" required>
+        </div>
+        <div class="form-outline mb-4">
+            <label for="hp" class="form-label">Bike horsepower value</label><br>
+            <input type="number" name="hp" id="hp" class="form-control" placeholder="Enter horse power of the bike" min="0" required>
+        </div>
+        <div class="form-outline mb-4">
+            <label for="service_date" class="form-label">Last service date:</label><br>
+            <input type="date" id="service_date" class="form-control" name="service_date" required>
+        </div>
+        <div class="form-outline mb-4">
+            <label for="img" class="form-label">Select bike image</label><br>
+            <input type="file" id="img" name="img" class="form-control" accept="image/*" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mb-4" value="Send">Send</button>
+    </form>
+</div>
+<!-- Add any links to other payment methods or refund forms here -->
+{% endblock %}

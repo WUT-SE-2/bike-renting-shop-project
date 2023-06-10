@@ -1,0 +1,51 @@
+{% extends "html/homepage-worker.html" %}
+
+{% block content %}
+
+<Label>Payment details</Label>
+<!-- Add any links to other payment methods or refund forms here -->
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Reservation id</th>
+        <th scope="col">Reserved bike name</th>
+        <th scope="col">Reservation start date</th>
+        <th scope="col">Reservation end date</th>
+        <th scope="col">Reservation status</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for reservation in reservations%}
+    <tr>
+        {% if reservation.reservationStatus == 'pending' and reservation.is_paid == False%}
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{reservation.reservation_ID}}</td>
+        <td>{{reservation.reservation_date_request}}</td>
+        <td>{{reservation.reserved_bike.name}}</td>
+        <td>{{reservation.reservation_date_end}}</td>
+        <td>{{reservation.reservationStatus}}</td>
+        <td>
+            <form id="confirm" action="/reservation/confirm/{{reservation.reservation_ID}}" method="post"
+                  style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-light" value="Confirm"
+                        form="confirm">Confirm
+                </button>
+            </form>
+            <form id="decline" action="/reservation/decline/{{reservation.reservation_ID}}" method="post"
+                  style="display: inline; border: none;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-light" value="Decline"
+                        form="decline">Decline
+                </button>
+            </form>
+    {% endif %}
+
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

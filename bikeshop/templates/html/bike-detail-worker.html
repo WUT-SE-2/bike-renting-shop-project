@@ -1,4 +1,4 @@
-{% extends "html/homepage.html" %}
+{% extends "html/homepage-worker.html" %}
 
 {% block content %}
 <!-- Product section-->
@@ -15,13 +15,14 @@
                 <p class="lead">Horse power: {{bike.hp}}</p>
                 <p class="lead">Location: {{bike.location}}</p>
                 <p class="lead">Purchase date: {{bike.purchase_date}}</p>
-                <p class="lead">Description: <br>{{bike.description}}</p>
+                <p class="lead">Description:<br> {{bike.description}}</p>
+                <p class="lead">Last serviced: {{bike.service_date}}</p>
                 <div class="d-flex">
-                    {%if bike.bike_status == "free"%}
-                    <form action="/reservation/reserve/{{bike.bike_ID}}">
+                    {%if bike.bike_status != "rented" and bike.bike_status != "maintain"%}
+                    <form action="/bike/service/{{bike.bike_ID}}">
                         <button class="btn btn-outline-dark flex-shrink-0" type="submit">
                             <i class="bi-cart-fill me-1"></i>
-                            Reserve
+                            Service
                         </button>
                     </form>
                     {%endif%}

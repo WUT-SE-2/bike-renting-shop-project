@@ -1,4 +1,4 @@
-{% extends "html/homepage.html" %}
+{% extends "html/homepage-mechanic.html" %}
 
 {% block content %}
 
@@ -28,13 +28,6 @@
                 </button>
             </form>
             {%if complaint.status == "opened"%}
-            <form id="cancel" action="/complaint/close/{{complaint.comp_ID}}" method=""
-                  style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-light" value="Cancel"
-                        form="cancel">Cancel
-                </button>
-            </form>
             {%endif%}
         </td>
     </tr>

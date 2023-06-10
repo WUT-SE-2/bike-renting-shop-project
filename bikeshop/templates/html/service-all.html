@@ -1,0 +1,57 @@
+{% extends "html/homepage-mechanic.html" %}
+
+{% block content %}
+
+<Label>Payment details</Label>
+<!-- Add any links to other payment methods or refund forms here -->
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Service id</th>
+        <th scope="col">Bike id</th>
+        <th scope="col">Service type</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for service in services%}
+    <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{service.service_ID}}</td>
+        <td>{{service.bike.bike_ID}}</td>
+        <td>{{service.service_type}}</td>
+        <td>
+            {%if service.service_type == "service"%}
+            <form id="complaint" action="/bike/repair/{{service.bike.bike_ID}}" method="get"
+                  style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-light" value="Complain"
+                        form="complaint">Service
+                </button>
+            </form>
+            {%endif%}
+            {% if service.service_type == "send"%}
+            <form id="pay" action="/bike/send/{{service.bike.bike_ID}}" method="post"
+                  style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-light" value="Pay"
+                        form="pay">Send
+                </button>
+            </form>
+            {%endif%}
+            {%if service.service_type == "receive"%}
+            <form id="cancel" action="/bike/return/{{service.bike.bike_ID}}" method="post"
+                  style="display: inline; border: none;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-light" value="Cancel"
+                        form="cancel">Return
+                </button>
+            </form>
+            {%endif%}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
