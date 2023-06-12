@@ -9,9 +9,9 @@
                     {% for bike in bikes %}
                         {% if bike.usable == True%}
                     <div class="col mb-5">
-                        <div class="card h-100">
+                        <div class="card h-100" style="width:300px;">
                             <!-- Product image-->
-                            <img class="card-img-top" src="{{ bike.image.url }}" height="200" alt="..."/>
+                            <img class="card-img-top" src="{{ bike.image.url }}" style="width:300px;" alt="..."/>
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
