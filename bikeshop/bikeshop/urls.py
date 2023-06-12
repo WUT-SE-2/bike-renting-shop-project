@@ -26,5 +26,6 @@ urlpatterns = [
     path('reservation/', include('reservation.urls')),
     path('complaint/', include('complaint.urls')),
     path('comment/', include('comment.urls')),
+    path('media/', include(staticfiles_urlpatterns())),
 ]
 urlpatterns+=staticfiles_urlpatterns()
