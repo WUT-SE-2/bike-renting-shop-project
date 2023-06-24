@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +26,6 @@ urlpatterns = [
     path('reservation/', include('reservation.urls')),
     path('complaint/', include('complaint.urls')),
     path('comment/', include('comment.urls')),
+    path('media/', include(staticfiles_urlpatterns())),
 ]
+urlpatterns+=staticfiles_urlpatterns()

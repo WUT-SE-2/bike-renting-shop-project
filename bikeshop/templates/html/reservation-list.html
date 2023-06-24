@@ -26,7 +26,6 @@
         <td>{{reservation.reservationStatus}}</td>
         <td>
             {% if reservation.is_active%}
-            {{reservation.reservation_ID}}
             <form action="/complaint/create/{{reservation.reservation_ID}}"
                   style="display: inline;">
                 {% csrf_token %}
